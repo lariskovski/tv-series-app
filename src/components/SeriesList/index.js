@@ -1,13 +1,21 @@
-
 import React from 'react';
 import './index.css';
 import { Link } from 'react-router-dom';
+import Default from '../Default';
+
 
 const SeriesListItem = ({ series }) => (
-    <li>
-        <Link to={'series/' + series.show.id}>
-            {series.show.name}
-        </Link>
+    <li className='show-item'>
+            <Link to={'series/' + series.show.id}>
+                {
+                    (series.show.image != null
+                    &&
+                    <div><img alt="Show icon" src={(series.show.image.medium)}/></div>)
+                    ||
+                    <Default />
+                }
+                {series.show.name}
+            </Link>
     </li>
 )
 const SeriesList = (props) => {

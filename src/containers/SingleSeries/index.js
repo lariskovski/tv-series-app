@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {useParams} from 'react-router-dom';
 import Loader from '../../components/Loader';
+import Default from '../../components/Default';
 
 const singleSeriesHook = (Component) => {
         return props => <Component {...props} params={useParams()} />;
@@ -35,7 +36,13 @@ class SingleSeries extends Component {
                     &&
                     <div>
                         <p>
-                        <img alt="Show Cover" style={{ padding: 20}} src={show.image.medium}></img>
+                        {
+                            (show.image != null
+                            &&
+                            <div><img alt="Show Cover" src={(show.image.medium)}/></div>)
+                            ||
+                            <Default />
+                        }
                         </p>
                         <p>{show.name}</p>
                         <p>Language: {show.language}</p>
