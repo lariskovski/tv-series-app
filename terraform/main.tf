@@ -1,13 +1,13 @@
 
 module "acm_certificate_request" {
-  source    = "git::https://github.com/lariskovski/terraform-modules.git//modules/acm?ref=v.0.1.0"
+  source    = "git::https://github.com/lariskovski/terraform.git//modules/acm?ref=v.0.1.0"
   subdomain = var.subdomain
 }
 
 module "cloudflare_certificate_validation" {
   depends_on = [module.acm_certificate_request]
 
-  source = "git::https://github.com/lariskovski/terraform-modules.git//modules/cloudflare?ref=v.0.1.0"
+  source = "git::https://github.com/lariskovski/terraform.git//modules/cloudflare?ref=v.0.1.0"
 
   zone_domain_name = var.root_domain_name
 
@@ -28,7 +28,7 @@ module "cloudflare_certificate_validation" {
 module "cloudfront_s3_distribution" {
   depends_on = [module.acm_certificate_request]
 
-  source = "git::https://github.com/lariskovski/terraform-modules.git//modules/cloudfront?ref=v.0.1.0"
+  source = "git::https://github.com/lariskovski/terraform.git//modules/cloudfront?ref=v.0.1.0"
 
   project_name          = var.project_name
   alias                 = var.subdomain
@@ -40,7 +40,7 @@ module "cloudfront_s3_distribution" {
 module "cloudflare_update_record" {
   depends_on = [module.cloudfront_s3_distribution]
 
-  source = "git::https://github.com/lariskovski/terraform-modules.git//modules/cloudflare?ref=v.0.1.0"
+  source = "git::https://github.com/lariskovski/terraform.git//modules/cloudflare?ref=v.0.1.0"
 
   zone_domain_name = var.root_domain_name
   record_name      = var.subdomain
